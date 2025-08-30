@@ -1,24 +1,24 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Progress Tracker</title>
+    <title>The Reset Method Progress Tracker</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Progress Tracker</h1>
-        <p>Please upload a clear photo of your physique. The analysis will provide feedback on the following parameters:</p>
-        <ul>
-            <li>Body Type</li>
-            <li>Aesthetic Appeal</li>
-            <li>Areas for Improvement</li>
-            <li>Detailed Analysis of Upper Body, Lower Body, and Core (only if visible in the photo)</li>
-        </ul>
-        <input type="file" id="fileInput" accept="image/*">
-        <button id="uploadButton">Upload Photo</button>
-        <div id="result"></div>
+        <h1>The Reset Method Progress Tracker</h1>
+        <form id="workoutForm">
+            <input type="date" id="dateInput" required>
+            <input type="text" id="exerciseInput" placeholder="Exercise" required>
+            <input type="number" id="setsInput" placeholder="Sets" required>
+            <input type="number" id="repsInput" placeholder="Reps" required>
+            <input type="number" id="weightInput" placeholder="Weight (kg)" required>
+            <button type="submit">Add Workout</button>
+        </form>
+        <div id="affirmation"></div>
+        <ul id="workoutList"></ul>
     </div>
     <script src="script.js"></script>
 </body>
