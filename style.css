@@ -1,4 +1,4 @@
-﻿body {
+body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -13,11 +13,22 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
 }
 
-input[type="file"] {
-    display: block;
-    margin: 20px auto;
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+form input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 button {
@@ -33,11 +44,31 @@ button:hover {
     background-color: #0056b3;
 }
 
-#result {
-    margin-top: 20px;
+#affirmation {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#workoutList {
+    list-style: none;
+    padding: 0;
     text-align: left;
 }
 
-h2, h3 {
-    color: #007BFF;
+#workoutList li {
+    background: #f4f4f4;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#workoutList button {
+    background-color: #dc3545;
+}
+
+#workoutList button:hover {
+    background-color: #a71d2a;
 }

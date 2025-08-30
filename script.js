@@ -1,69 +1,46 @@
-﻿document.getElementById('uploadButton').addEventListener('click', function() {
-    const fileInput = document.getElementById('fileInput');
-    const file = fileInput.files[0];
+const form = document.getElementById('workoutForm');
+const list = document.getElementById('workoutList');
+const affirmationDiv = document.getElementById('affirmation');
 
-    if (file) {
-        // Check if the file is an image
-        if (!file.type.startsWith('image/')) {
-            document.getElementById('result').innerHTML = '<p>Please upload a valid image file.</p>';
-            return;
-        }
+form.addEventListener('submit', function (e) {
+    e.preventDefault();
 
-        // Display the image
-        const img = document.createElement('img');
-        img.src = URL.createObjectURL(file);
-        document.getElementById('result').innerHTML = '';
-        document.getElementById('result').appendChild(img);
+    const workout = {
+        date: document.getElementById('dateInput').value,
+        exercise: document.getElementById('exerciseInput').value,
+        sets: document.getElementById('setsInput').value,
+        reps: document.getElementById('repsInput').value,
+        weight: document.getElementById('weightInput').value
+    };
 
-        // Simulate analysis
-        const analysis = simulateAnalysis();
-        document.getElementById('result').innerHTML += `<h2>Analysis Result</h2>${analysis}`;
+    const workouts = JSON.parse(localStorage.getItem('workouts')) || [];
+    workouts.push(workout);
+    localStorage.setItem('workouts', JSON.stringify(workouts));
 
-        // Add a positive affirmation
-        const affirmation = getPositiveAffirmation();
-        document.getElementById('result').innerHTML += `<h3>Positive Affirmation</h3><p>${affirmation}</p>`;
-    }
+    renderWorkouts();
+    showAffirmation();
+    form.reset();
 });
 
-function simulateAnalysis() {
-    const analysis = {
-        bodyType: "Mesomorph",
-        aestheticAppeal: "Well-defined muscles with good symmetry",
-        areasForImprovement: "Focus on lower body strength and core stability",
-        detailedAnalysis: {
-            upperBody: "Strong shoulders and arms, good muscle definition.",
-            lowerBody: "Needs improvement in leg strength and muscle tone.",
-            core: "Stable core, but could benefit from more definition."
-        }
-    };
-
-    // Simulate visibility of body parts
-    const visibleParts = {
-        upperBody: true,  // Assume upper body is visible
-        lowerBody: true,  // Assume lower body is visible
-        core: true        // Assume core is visible
-    };
-
-    let detailedAnalysisResult = '';
-    if (visibleParts.upperBody) {
-        detailedAnalysisResult += `<h3>Upper Body</h3><p>${analysis.detailedAnalysis.upperBody}</p>`;
-    }
-    if (visibleParts.lowerBody) {
-        detailedAnalysisResult += `<h3>Lower Body</h3><p>${analysis.detailedAnalysis.lowerBody}</p>`;
-    }
-    if (visibleParts.core) {
-        detailedAnalysisResult += `<h3>Core</h3><p>${analysis.detailedAnalysis.core}</p>`;
-    }
-
-    return `
-        <h3>Body Type</h3><p>${analysis.bodyType}</p>
-        <h3>Aesthetic Appeal</h3><p>${analysis.aestheticAppeal}</p>
-        <h3>Areas for Improvement</h3><p>${analysis.areasForImprovement}</p>
-        ${detailedAnalysisResult}
-    `;
+function renderWorkouts() {
+    const workouts = JSON.parse(localStorage.getItem('workouts')) || [];
+    list.innerHTML = '';
+    workouts.forEach((w, index) => {
+        const li = document.createElement('li');
+        li.textContent = `${w.date} - ${w.exercise}: ${w.sets}x${w.reps} @ ${w.weight}kg`;
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'Remove';
+        removeBtn.addEventListener('click', () => {
+            workouts.splice(index, 1);
+            localStorage.setItem('workouts', JSON.stringify(workouts));
+            renderWorkouts();
+        });
+        li.appendChild(removeBtn);
+        list.appendChild(li);
+    });
 }
 
-function getPositiveAffirmation() {
+function showAffirmation() {
     const affirmations = [
         "You're doing an amazing job!",
         "Keep pushing forward!",
@@ -71,5 +48,7 @@ function getPositiveAffirmation() {
         "Your progress is inspiring!",
         "Believe in yourself!"
     ];
-    return affirmations[Math.floor(Math.random() * affirmations.length)];
+    affirmationDiv.textContent = affirmations[Math.floor(Math.random() * affirmations.length)];
 }
+
+renderWorkouts();
